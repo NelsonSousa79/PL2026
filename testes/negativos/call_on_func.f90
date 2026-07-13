@@ -1,0 +1,10 @@
+PROGRAM CALLF
+      INTEGER QUAD
+      CALL QUAD(3)
+      END
+
+      INTEGER FUNCTION QUAD(N)
+      INTEGER N
+      QUAD = N * N
+      RETURN
+      END
