@@ -1,0 +1,182 @@
+Programas:
+
+program_file
+
+: program_unit program_file
+| program_unit
+
+program_unit
+
+: main_program
+| function_def
+| subroutine_def
+
+main_program
+
+: PROGRAM ID
+declarations
+statements
+END
+
+function_def
+
+: type FUNCTION ID LPAREN param_list_opt RPAREN
+declarations
+statements
+END
+
+subroutine_def : SUBROUTINE ID LPAREN param_list_opt RPAREN
+declarations
+statements
+END
+| SUBROUTINE ID
+declarations
+statements
+END
+param_list_opt : param_list
+| ε
+param_list
+
+: param_list COMMA ID
+| ID
+
+Declarações de variaveis:
+declarations
+
+: declarations declaration
+| ε
+
+declaration
+
+: type id_decl_list
+
+type
+
+: INTEGER
+| REAL
+| LOGICAL
+| CHARACTER
+| CHARACTER_SIZE
+
+id_decl_list
+
+: id_decl_list COMMA id_decl
+| id_decl
+
+id_decl
+
+: ID LPAREN INT_CONST RPAREN
+| ID
+
+Statements:
+statements
+
+: statements labeled_stmt
+| ε
+
+labeled_stmt
+
+: INT_CONST statement
+| statement
+
+← label + statement (ex: 10 CONTINUE)
+
+statement
+
+: assign_stmt
+| if_stmt
+| do_stmt
+| goto_stmt
+| continue_stmt
+| print_stmt
+| read_stmt
+| call_stmt
+| return_stmt
+
+← atribuir valor a variavel
+
+assign_stmt
+
+: ID EQUALS expr
+| ID LPAREN expr RPAREN EQUALS expr
+
+if_stmt
+
+: IF LPAREN expr RPAREN THEN
+statements
+ENDIF
+| IF LPAREN expr RPAREN THEN
+statements
+ELSE
+statements
+ENDIF
+
+do_stmt
+
+: DO INT_CONST ID EQUALS expr COMMA expr
+statements
+| DO INT_CONST ID EQUALS expr COMMA expr COMMA expr
+statements
+
+goto_stmt
+
+: GOTO INT_CONST
+
+continue_stmt : CONTINUE
+print_stmt
+read_stmt
+
+: PRINT TIMES COMMA expr_list
+: READ TIMES COMMA read_list
+
+read_list
+
+: read_list COMMA read_item
+| read_item
+
+read_item
+
+: ID
+| ID LPAREN expr RPAREN
+
+← array: READ *, NUMS(I)
+
+call_stmt
+
+: CALL ID
+← subrotinas, sem return
+| CALL ID LPAREN expr_list RPAREN
+
+return_stmt
+
+: RETURN
+
+expr
+
+expr_list
+
+: expr OR expr
+| expr AND expr
+| NOT expr
+| expr EQ expr | expr NE expr
+| expr LT expr | expr LE expr
+| expr GT expr | expr GE expr
+| expr PLUS expr
+| expr MINUS expr
+| expr TIMES expr
+| expr DIVIDE expr
+| MINUS expr
+| LPAREN expr RPAREN
+| ID LPAREN expr_list RPAREN
+| ID
+| INT_CONST
+| REAL_CONST
+| STRING
+| TRUE
+| FALSE
+: expr_list COMMA expr
+| expr
+
+← chamada de função: MOD(NUM, I)
+
+
