@@ -1,0 +1,8 @@
+PROGRAM SUBNOA
+      CALL SAUDAR
+      END
+
+      SUBROUTINE SAUDAR
+      PRINT *, 'Ola!'
+      RETURN
+      END
